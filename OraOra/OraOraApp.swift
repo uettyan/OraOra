@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct OraOraApp: App {
+    var model = ViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: model)
         }
     }
 }
