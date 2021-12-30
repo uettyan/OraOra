@@ -8,27 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel: ViewModel
+    @State var oraModel: OraModel
     var body: some View {
         ZStack{
             Color.white.gesture(DragGesture(minimumDistance: 0).onEnded({ (value) in
                 print(value.location)
+                let oram = OraModel()
+                oram.location = value.location
+                self.oraModel = oram
             }))
-            ImageContent(viewModel: viewModel)
+            ImageContent(oraModel: oraModel)
         }
     }
 }
 
-class ViewModel: ObservableObject {
+// OraModel上でlocationを管理
+// TODO 表示したらゆっくり消える
+class OraModel: ObservableObject {
     @Published var location: CGPoint = CGPoint.init(x: 0, y: 0)
 }
 
 struct ImageContent: View {
-    @ObservedObject var viewModel: ViewModel
+    @ObservedObject var oraModel: OraModel
     var body: some View {
         ZStack{
-            Circle().position(viewModel.location)
-                .frame(width: 100, height: 100)
+            Image("Ora").position(oraModel.location)
         }
     }
 }
+
+
